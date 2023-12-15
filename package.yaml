@@ -1,0 +1,105 @@
+name:        sonic
+version:     0.3.0
+synopsis:    Sonic
+description: Please see the README on GitHub at <https://github.com/adjoint-io/sonic#readme>
+maintainer:  Adjoint Inc (info@adjoint.io)
+license:     MIT
+github:      adjoint-io/sonic
+category:    Cryptography
+
+dependencies:
+  - base            >=4.7      && <5
+  - bulletproofs    >=1.1      && <2.0
+  - elliptic-curve  >=0.3      && <0.4
+  - galois-field    >=1.0      && <1.1
+  - MonadRandom     >=0.5.1.1  && <0.6
+  - pairing         >= 1.0     && <1.1
+  - poly            >= 0.4     && <0.5
+  - protolude       >=0.2.3    && <0.3
+  - semirings       >=0.5.1    && <0.6
+  - vector          >=0.12.0.0 && <0.13
+  - deepseq         >=1.1.0.0 && <1.5.0.0
+
+default-extensions:
+  - LambdaCase
+  - RecordWildCards
+  - OverloadedStrings
+  - NoImplicitPrelude
+  - FlexibleInstances
+  - FlexibleContexts
+  - ScopedTypeVariables
+  - RankNTypes
+
+extra-source-files:
+  - README.md
+  - ChangeLog.md
+
+ghc-options:
+  -Wall
+  -Werror
+  -Wcompat
+  -Wincomplete-record-updates
+  -Wredundant-constraints
+  -Wno-unused-matches
+  -Wno-name-shadowing
+  -Wno-type-defaults
+  -Wno-orphans
+  -Wno-incomplete-uni-patterns
+  -Wno-incomplete-patterns
+
+library:
+  exposed-modules:
+    - Sonic.CommitmentScheme
+    - Sonic.Constraints
+    - Sonic.Protocol
+    - Sonic.SRS
+    - Sonic.Signature
+    - Sonic.Utils
+    - Sonic.Circuits
+  source-dirs:
+    - src
+
+tests:
+  sonic-test:
+    main: Main.hs
+    source-dirs: test
+    dependencies:
+      - sonic
+      - tasty            >=1.2      && <1.3
+      - tasty-discover   >=4.2.1    && <4.3
+      - tasty-hunit      >=0.10.0.2 && <0.11
+      - tasty-quickcheck >=0.10.0.0 && <0.11
+      - QuickCheck       >=2.12.0   && <2.14
+
+benchmarks:
+  sonic-benchmarks:
+    source-dirs:
+      - bench
+      - test
+    main: Main.hs
+    dependencies:
+      - sonic
+      - criterion        >=1.5.6.1  && <1.6
+      - QuickCheck       >=2.12.0   && <2.14
+      - tasty            >=1.2      && <1.3
+      - tasty-quickcheck >=0.10.0.0 && <0.11
+      - tasty-hunit      >=0.10.0.0 && <0.11
+    other-modules:
+      - Test.Reference
+
+executables:
+  sonic-example:
+    main: Main
+    dependencies:
+      - sonic
+      - tasty            >=1.2      && <1.3
+      - tasty-discover   >=4.2.1    && <4.3
+      - tasty-hunit      >=0.10.0.0 && <0.11
+      - tasty-quickcheck >=0.10.0.0 && <0.11
+      - QuickCheck       >=2.12.0   && <2.14
+    ghc-options:
+      -threaded
+      -rtsopts
+      -with-rtsopts=-N
+    source-dirs:
+      - examples
